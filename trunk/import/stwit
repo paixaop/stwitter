@@ -1,0 +1,244 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use FindBin;
+use Getopt::Long;
+use Pod::Usage;
+use lib(File::Spec->catdir($FindBin::Bin, File::Spec->updir, 'lib'));
+
+use STwitter::Shell;
+
+{
+    my ($config, $version, $help);
+
+    print "StealthTwitterter - Privacy for your Twitter posts. Version $STwitter::Shell::VERSION\n";
+    print "Home page: http://code.google.com/p/stwitter/\n\n";
+
+    # Default config file is expected to be at the current directory
+    $config = do {
+        my $file;
+        foreach my $suffix qw(conf config) {
+            my $test = "stwit.$suffix";
+            if (-f $test) {
+                $file = $test;
+                last;
+            }
+        }
+        $file;
+    };
+
+    if (! GetOptions(
+            '--config=s', => \$config,
+            '--help'      => \$help
+    )) {
+        exit 1;
+    }
+
+    if ($help) {
+        pod2usage(-verbose => 2);
+    }
+
+    STwitter::Shell->new($config)->run;
+}
+
+__END__
+
+=head1 NAME
+
+stwit - Access Twitter From Your Command Line
+
+Home Page: http://code.google.com/p/stwitter/
+
+=head1 SYNOPSIS
+
+   stwit
+   stwit -c stwit.conf
+   stwit -v
+   stwit -h
+
+   # Example Configuration file
+   # stwit.conf
+   ---
+   username= your@email.address
+   password= password
+   
+   codewords= words.txt
+   load= autoload.txt
+   proxy= http://127.0.0.1:8118
+   verify_tor_onstart= true
+   exit_no_tor= true
+   paranoid= false
+
+
+=head1 DESCRIPTION
+
+StealthTiwt allows fast, and private, access to Twitter by combining the power
+and privacy of Tor (http://www.torproject.org/) with a command line Twitter client.
+
+The goal of StealthTiwt is not to be a beautiful and graphical, but stealth, fast
+and automated.
+
+You can post dozens of Twitts, get friend status, and time line, automatically
+and privately without having to type a single key.
+This is important if you are accessing Twitter from an untrusted computer, that
+may be running key loggers.
+
+Connections to Twitter are made through, a secure and private Tor connection, your
+IP address, or identity will not be revealed.
+
+=head1 OPTIONS
+
+=head2 --config | -c
+
+Specify the config file to read from. By default, StealthTwitter attempts to read
+a config file named stwit.conf in the current directory
+
+=head2 --help | -h
+
+Print out this help message and exit
+
+=head1 CONFIGURATION FILE
+
+The StealthTwitter configuration file is a simple text file that configures the
+following options:
+
+=head2 username = <your@email.address>
+
+Your Twitter user name
+
+=head2 password = <your_password>
+
+your Twitter password
+   
+=head2 codewords = <codeword_file>
+
+Codewords file allows you to setup keywords, or expressions, that get translated
+into the real words before the message is posted. This helps to avoid
+incrimination by the use of key loggers in systems you do not control.
+
+Example:
+  Code word   Translation
+     Girl       Boss
+
+now if your message is: my girl is an ass
+translation: my Boss is an ass
+
+The code word file defines a code word, and translation/replacement expression
+per line separated by ':'.
+Example
+   girl:boss
+   france:iran
+
+=head2 load = autoload.txt
+
+Load a file with StealthTwitter commands and run them one by one.
+Each line in the file is a command
+
+Usage:
+  load <file_name>
+  
+If you want to exit if Tor is not running then either set C<paranoid> to On, or
+execute the C<notorexit> command as the first command in your file.
+Setting C<paranoid> to On may cause huge delays since StealthTwitter will check
+Tor status before running every command. It is advisable, especially, if you
+are in a hurry to use the C<notorexit> command in load operations.
+
+Example file:
+   
+   notorexit
+   say Testing 1, 2, 3
+   say Yet another Twitter message
+   
+   
+In this example if Tor is not running none of the other say commands get
+executed.
+
+=head2 proxy = <http://<server>:<port>
+
+Tor/Privoxy proxy server URL. Usually http://127.0.0.1:8118
+
+=head2 verify_tor_onstart = true|false
+
+Verify if Tor is running at the start of StealthTwitter
+
+=head2 exit_no_tor = true|false
+
+If verify_tor_onstart, and  exit_no_tor are enabled StealthTwitter will exit
+if Tor connection status is not up.
+
+=head2 paranoid = false|false
+
+In paranoid mode, StealthTwitter will check Tor status before running any command.
+if Tor connection status is not up StealthTwitter will exit immediately
+
+=head1 SHELL MODE
+
+If your autoload command file does not contain an exit command, or you have no
+autoload file configured StealthTwitter will run in shell mode where you can
+interactively type Twitter commands.
+
+In the interactive shell environment you can execute the following commands
+
+    codewords        - Show configured code words.
+    exit             - exits the program
+    followers        - display followers' status
+    friends          - display friends' status
+    friends_timeline - display friends' status as a timeline
+    ft               - alias to friends_timeline
+    help             - prints this screen, or help on 'command'
+    load             - load and run shell commands from file
+    login            - Login to Twitter with current user credenials.
+    notorexit        - If Tor is not being used exit SteatlhTwit
+    paranoid         - Check if Tor is running before every command
+    password         - set Twitter password.
+    pt               - alias to public_timeline
+    public_timeline  - display public status as a timeline
+    say              - alias to 'update'
+    tor              - check if Tor is being used.
+    update           - post a message
+    username         - set Twitter user name.
+
+Any of these commands may be used in a command file and executed in batch mode.
+Altough commands are very simple and short the shell environment does support TAB
+command completion.
+
+To get detailed help on any command use the C<help> command.
+To exit StealthTwitter type C<exit>
+
+=head1 IDENTITIES
+
+By default StealthTwitter uses the configuration file set credentials in order
+to login to Twitter. But you can also switch Twitter accounts with the C<username>
+and C<password> commands, followed by a C<login> command.
+
+A C<login> command forces the logout of previous user.
+
+Example:
+
+    say Status update for config file user credentials
+    username newuser
+    password newpassword
+    login
+    say Status update for newuser!
+
+=head1 URL SHORTENING
+
+By default all URLs are automatically shortened using TinyURL.com service.
+
+=head1 AUTHOR
+
+Pedro Paixao Copyright 2009
+
+Based on Twitter::Shell parts of the code are:
+Gungho is Copyright (c) 2007 Daisuke Maki <daisuke@endeworks.jp> Endeworks Ltd.
+All rights reserved.
+
+=head1 LICENSE
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+See http://www.perl.com/perl/misc/Artistic.html
+
+=cut
