@@ -2,7 +2,7 @@
 
 = Introduction =
 
-StealthTiwtter allows fast, and private, access to Twitter by combining the power
+StealthTwitter allows fast, and private, access to Twitter by combining the power
 and privacy of Tor (http://www.torproject.org/) with a command line Twitter client.
 
 The goal of StealthTiwtter is not to be a beautiful and graphical, but stealth, fast
