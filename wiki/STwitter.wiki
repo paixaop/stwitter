@@ -5,7 +5,7 @@
 StealthTiwtter allows fast, and private, access to Twitter by combining the power
 and privacy of Tor (http://www.torproject.org/) with a command line Twitter client.
 
-The goal of StealthTiwter is not to be a beautiful and graphical, but stealth, fast
+The goal of StealthTiwtter is not to be a beautiful and graphical, but stealth, fast
 and automated.
 
 You can post dozens of Twitts, get friend status, and time line, automatically
@@ -24,6 +24,7 @@ IP address, or identity will not be revealed.
     * LWP::UserAgent
     * WWW::Shorten
     * Term::Shell
+    * Getopt::Long
   * Tor
   * Privoxy
 
@@ -42,7 +43,7 @@ For more information on how Tor works please visit https://www.torproject.org/in
 
 The easiest way to get Tor is to download it from https://www.torproject.org/download.html.en
 
-If you want to run StealthTwitter from a USB drive in conjuntion with Tor please read http://portabletor.sourceforge.net/
+If you want to run StealthTwitter from a USB drive in conjunction with Tor please read http://portabletor.sourceforge.net/
 
 
 = Command Line Options =
@@ -124,7 +125,7 @@ executed.
 == proxy = http://server:port ==
 
 Tor/Privoxy proxy server URL. Usually http://127.0.0.1:8118
-Tor is a Socks proxy not an HTTP proxy, so you should use Privoxy or another proxy server to realay your data through Tor.
+Tor is a Socks proxy not an HTTP proxy, so you should use Privoxy or another proxy server to relay your data through Tor.
 
 == verify_tor_onstart = true|false ==
 
@@ -157,8 +158,8 @@ friends_timeline - display friends' status as a timeline
 ft               - alias to friends_timeline
 help             - prints this screen, or help on command
 load             - load and run shell commands from file
-login            - Login to Twitter with current user credenials.
-notorexit        - If Tor is not being used exit SteatlhTwit
+login            - Login to Twitter with current user credentials.
+notorexit        - If Tor is not being used exit SteatlhTwitter
 paranoid         - Check if Tor is running before every command
 password         - set Twitter password.
 pt               - alias to public_timeline
@@ -170,7 +171,7 @@ username         - set Twitter user name.
 }}}
 
 Any of these commands may be used in a command file and executed in batch mode.
-Altough commands are very simple and short the shell environment does support TAB
+Although commands are very simple and short the shell environment does support TAB
 command completion.
 
 To get detailed help on any command use the _help_ command.
