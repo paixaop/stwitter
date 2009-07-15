@@ -176,7 +176,7 @@ command completion.
 
 To get detailed help on any command use the _help_ command.
 
-To exit StealthTwit type _exit_
+To exit StealthTwitter type _exit_
 
 = Identities =
 
