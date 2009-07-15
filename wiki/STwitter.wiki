@@ -16,6 +16,34 @@ may be running key loggers.
 Connections to Twitter are made through, a secure and private Tor connection, your
 IP address, or identity will not be revealed.
 
+= Requirements =
+
+  * Perl 5.8
+    * Config::General
+    * Net::Twitter
+    * LWP::UserAgent
+    * WWW::Shorten
+    * Term::Shell
+  * Tor
+  * Privoxy
+
+You can get all the necessary Perl modules from [http://search.cpan.org CPAN].
+
+= Privacy Notes =
+
+StealthTwitter is only stealthy and private if you are using Tor or a similar technology to connect to the Internet. It you do not have Tor properly configured you may be leaking information that can compromise your posts.
+It is important to note that the program checks if Tor is running by accessing http://check.torproject.org/. If Tor is not running, or if it is not properly configured your access to the "Tor validation" site may be logged and you can be exposed.
+
+Always test your configuration in a trusted environment before you venture out into the "real world".
+
+= Tor =
+
+For more information on how Tor works please visit https://www.torproject.org/index.html.en
+
+The easiest way to get Tor is to download it from https://www.torproject.org/download.html.en
+
+If you want to run StealthTwitter from a USB drive in conjuntion with Tor please read http://portabletor.sourceforge.net/
+
 
 = Command Line Options =
 
@@ -151,7 +179,7 @@ To exit StealthTwit type _exit_
 
 = Identities =
 
-By default StealthTwit uses the configuration file set credentials in order
+By default StealthTwitter uses the configuration file set credentials in order
 to login to Twitter. But you can also switch Twitter accounts with the _username_
 and _password_ commands, followed by a _login_ command.
 
