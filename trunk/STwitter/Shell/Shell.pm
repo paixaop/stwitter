@@ -13,6 +13,7 @@ use warnings;
 use base qw(Term::Shell);
 use WWW::Shorten 'TinyURL';
 use Net::Twitter;
+use utf8;
 
 sub context { shift->_elem('context', @_) }
 sub prompt_str { shift->_elem('prompt_str', @_) }
@@ -135,7 +136,8 @@ sub run_friends_timeline
 
     if ($ret) {
         foreach my $rec (@$ret) {
-            printf( "[%s] %s\n", $rec->{user}{screen_name}, $rec->{text});
+            utf8::decode($rec->{text});
+            printf( "[%s] %s\n\n", $rec->{user}{screen_name}, $rec->{text});
         }
     }
 }
@@ -153,7 +155,8 @@ sub run_public_timeline
 
     if ($ret) {
         foreach my $rec (@$ret) {
-            printf( "[%s] %s\n", $rec->{user}{screen_name}, $rec->{text});
+            utf8::decode($rec->{text});
+            printf( "[%s] %s\n\n", $rec->{user}{screen_name}, $rec->{text});
         }
     }
 }
@@ -464,6 +467,11 @@ sub run_login {
     $self->context->twitter(Net::Twitter->new(
         username   => $self->context->config->{username},
         password   => $self->context->config->{password},
+        clientname => "StealthTwitter",
+        clientver  => "1.0",
+        clienturl  => "http://code.google.com/p/stwitter/",
+        useragent  => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9a1) Gecko/20061204 GranParadiso/3.0a1",
+        source     => "stealthtwitter",
     ));
 
     if( $self->context->twitter->verify_credentials ) {

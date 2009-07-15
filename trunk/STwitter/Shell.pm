@@ -16,7 +16,7 @@ use Config::General;
 use Net::Twitter;
 use STwitter::Shell::Shell;
 use LWP::UserAgent;
-
+use utf8;
 
 our $VERSION = '0.03';
 
@@ -86,23 +86,31 @@ sub setup
               $self->config->{filename} . "\n";
         print "Your connection is not private!\n\n";
     }
-    
+
     $self->get_codewords();
-        
-    $self->twitter(Net::Twitter->new(
-        username   => $self->config->{username},
-        password   => $self->config->{password},
-    ));
-    
+
     if( $self->config->{paranoid} ) {
         print "Paranoid is On. ";
         my $ret = $self->tor_verify();
-    
+
         if( $ret != 1 ) {
             print "Terminating!\n";
             exit; 
         }
+    } else {
+        print "Paranoid if off\n";
     }
+
+    print "Login to Twitter\n";
+    $self->twitter(Net::Twitter->new(
+        username   => $self->config->{username},
+        password   => $self->config->{password},
+        clientname => "StealthTwitter",
+        clientver  => "1.0",
+        clienturl  => "http://code.google.com/p/stwitter/",
+        useragent  => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9a1) Gecko/20061204 GranParadiso/3.0a1",
+        source     => "stealthtwitter",
+    ));
     
     if( $self->twitter->verify_credentials ) {
         print "Login succesful\n";
@@ -174,11 +182,17 @@ sub api_favorites {
 sub get_codewords {
     my $self = shift;
     
+    if( !defined($self->config->{codewords}) ) {
     
-    if( !open(FIN, "<".$self->config->{codewords} ) ) {
+          print "Code word file not configured\n";
+          return;
+        
+     } elsif( !open(FIN, "<".$self->config->{codewords} ) ) {
+        
         print $self->config->{codewords} . " could not be loaded\n";
         print "No code words loaded.\n";
         return;
+
     }
     
     while( <FIN> ) {

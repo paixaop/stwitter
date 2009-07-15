@@ -17,10 +17,17 @@ use lib(File::Spec->catdir($FindBin::Bin, File::Spec->updir, 'lib'));
 
 use STwitter::Shell;
 
+my $VERSION = "0.3";
+
 {
     my ($config, $version, $help);
-
-    print "StealthTwitterter - Privacy for your Twitter posts. Version $STwitter::Shell::VERSION\n";
+    
+    my $rev ='$Rev$';          # don't set this manually. Svn does it...
+    $rev =~ /(\d+)/;
+    $rev = $1;
+    $VERSION .= "." .$rev;
+    
+    print "StealthTwitterter - Privacy for your Twitter posts. Version $VERSION\n";
     print "Home page: http://code.google.com/p/stwitter/\n\n";
 
     # Default config file is expected to be at the current directory
