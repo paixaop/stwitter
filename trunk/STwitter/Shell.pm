@@ -1,8 +1,12 @@
-# $Id: /mirror/perl/Twitter-Shell/trunk/lib/Twitter/Shell.pm 7106 2007-05-08T15:08:18.139509Z daisuke  $
 #
-# Copyright (c) 2007 Daisuke Maki <daiuske@endeworks.jp>
-# All rights reserved.
-
+# StealthTwitter
+# 
+# Author: Pedro Paixao (paixaop@gmail.com) copyright 2009 all rights reserved.
+# Based on TwitterShell from Daisuke Maki
+#
+# This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+# See http://www.perl.com/perl/misc/Artistic.html
+# $Id$
 package STwitter::Shell;
 use strict;
 use warnings;
