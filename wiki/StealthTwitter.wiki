@@ -129,7 +129,7 @@ Tor is a Socks proxy not an HTTP proxy, so you should use Privoxy or another pro
 
 == verify_tor_onstart = true|false ==
 
-Verify if Tor is running at the start of StealthTwit
+Verify if Tor is running at the start of StealthTwitter
 
 == exit_no_tor = true|false ==
 
@@ -138,13 +138,13 @@ if Tor connection status is not up.
 
 == paranoid = false|false ==
 
-In paranoid mode, StealthTwit will check Tor status before running any command.
+In paranoid mode, StealthTwitter will check Tor status before running any command.
 if Tor connection status is not up StealthTwit will exit immediately
 
 = Shell Mode =
 
 If your autoload command file does not contain an exit command, or you have no
-autoload file configured StealthTwit will run in shell mode where you can
+autoload file configured StealthTwitter will run in shell mode where you can
 interactively type Twitter commands.
 
 In the interactive shell environment you can execute the following commands
