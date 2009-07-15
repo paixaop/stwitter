@@ -207,3 +207,7 @@ Pedro Paixao Copyright 2009
 Based on Twitter::Shell parts of the code are:
 Gungho is Copyright (c) 2007 Daisuke Maki <daisuke@endeworks.jp> Endeworks Ltd.
 All rights reserved.
+
+= License =
+This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+See http://www.perl.com/perl/misc/Artistic.html
